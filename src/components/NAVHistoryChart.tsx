@@ -85,19 +85,6 @@ export function NAVHistoryChart({ data, isLoading }: NAVHistoryChartProps) {
           </ResponsiveContainer>
         </div>
       </CardContent>
-      <div className="px-6 pb-4">
-        <div className="flex items-center gap-2 text-sm">
-          {trend === "up" ? (
-            <TrendingUp className="h-4 w-4 text-green-500" />
-          ) : (
-            <TrendingDown className="h-4 w-4 text-red-500" />
-          )}
-          <span className={trend === "up" ? "text-green-500" : "text-red-500"}>
-            {Math.abs(percentageChange).toFixed(2)}% {trend === "up" ? "increase" : "decrease"} in
-            last {data.length} days
-          </span>
-        </div>
-      </div>
     </Card>
   );
 }
