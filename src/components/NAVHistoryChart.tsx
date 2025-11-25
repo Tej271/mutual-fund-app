@@ -1,4 +1,3 @@
-import { TrendingUp, TrendingDown } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -39,11 +38,6 @@ export function NAVHistoryChart({ data, isLoading }: NAVHistoryChartProps) {
       </Card>
     );
   }
-
-  const firstNav = data[0]?.nav || 0;
-  const lastNav = data[data.length - 1]?.nav || 0;
-  const trend = lastNav >= firstNav ? "up" : "down";
-  const percentageChange = ((lastNav - firstNav) / firstNav) * 100;
 
   return (
     <Card>
