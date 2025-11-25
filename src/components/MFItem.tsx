@@ -6,6 +6,7 @@ interface MutualFundItemProps {
   schemeName: string;
   category?: string;
   fundHouse?: string;
+  onSchemeClick?: (schemeCode: string) => void;
 }
 
 export function MutualFundItem({
@@ -13,9 +14,13 @@ export function MutualFundItem({
   schemeName,
   category,
   fundHouse,
+  onSchemeClick,
 }: MutualFundItemProps) {
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card
+      className="hover:shadow-md transition-shadow cursor-pointer"
+      onClick={() => onSchemeClick?.(schemeCode)}
+    >
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <CardTitle className="text-lg font-medium line-clamp-2">{schemeName}</CardTitle>

@@ -3,12 +3,17 @@ import { useSearchFunds } from "@/state/queries/funds";
 import { useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
 import { MutualFundItem } from "../components/MFItem";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 400);
-
+  const navigate = useNavigate();
   const { data, isLoading, error } = useSearchFunds(debouncedQuery);
+
+  const handleMFItem = (schemeCode: string) => {
+    navigate(`/mutual_fund/${schemeCode}`);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -41,6 +46,7 @@ function Home() {
                 key={scheme.schemeCode}
                 schemeCode={scheme.schemeCode}
                 schemeName={scheme.schemeName}
+                onSchemeClick={handleMFItem}
               />
             ))}
           </div>
