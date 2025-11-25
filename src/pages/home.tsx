@@ -1,5 +1,4 @@
-import { SerachMf } from "@/components/SearchMf";
-import React from "react";
+import { SerachMf } from "@/components/SearchMF";
 
 function Home() {
   return (
