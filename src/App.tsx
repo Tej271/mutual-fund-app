@@ -17,16 +17,14 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/mutual_fund/:mutualFundName" element={<MutualFundPage />} />
-          </Routes>
-        </BrowserRouter>
-      </QueryClientProvider>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/mutual_fund/:mutualFundName" element={<MutualFundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
