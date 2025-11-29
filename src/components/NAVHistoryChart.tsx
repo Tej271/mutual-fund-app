@@ -9,6 +9,8 @@ import {
 } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import html2canvas from "html2canvas-pro";
+import {  useRef, useState } from "react";
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
@@ -22,7 +24,25 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export function NAVHistoryChart({ data, isLoading }: NAVHistoryChartProps) {
+export function NAVHistoryChart({
+  data,
+  isLoading,
+  setChart,
+}: NAVHistoryChartProps & { setChart?: (chart: string) => void }) {
+  const componentRef = useRef<HTMLDivElement>(null);
+
+  const exportAsImage = async (element: HTMLDivElement | null) => {
+    console.log("Starting image export");
+    if (!element) return;
+    const canvas = await html2canvas(element);
+    const image = canvas.toDataURL("image/png", 1.0);
+    console.log("Image size:", image.length, "characters");
+
+    if (setChart) {
+      setChart(image);
+    }
+  };
+
   if (isLoading || !data?.length) {
     return (
       <Card>
@@ -46,7 +66,7 @@ export function NAVHistoryChart({ data, isLoading }: NAVHistoryChartProps) {
         <CardDescription>Last {data.length} days</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="h-64">
+        <div className="h-64" ref={componentRef}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
@@ -68,6 +88,7 @@ export function NAVHistoryChart({ data, isLoading }: NAVHistoryChartProps) {
               />
               <Tooltip content={<CustomTooltip />} />
               <Line
+                onAnimationEnd={() => exportAsImage(componentRef.current)}
                 type="monotone"
                 dataKey="nav"
                 stroke="#3b82f6"

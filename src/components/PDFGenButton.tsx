@@ -4,9 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { mutualFundAPI } from "@/api/funds";
 import { useParams } from "react-router-dom";
 import { useNAVHistory } from "@/state/queries/funds";
+import { type CSSProperties } from "react";
 
-const PdfCard = () => {
-  const styles = {
+const PDFGenButton = ({ chart }: { chart?: string | null }) => {
+  const styles: Record<string, CSSProperties> = {
     container: {
       width: "220px",
       borderRadius: "5px",
@@ -48,7 +49,7 @@ const PdfCard = () => {
     enabled: !!mutualFundName,
   });
 
-  const { data: navHistory, isLoading: isNavHistoryLoading } = useNAVHistory(mutualFundName);
+  const { data: navHistory } = useNAVHistory(mutualFundName);
 
   return (
     <div style={styles.container}>
@@ -59,10 +60,10 @@ const PdfCard = () => {
               data={data}
               latestNav={latestNav}
               navHistory={navHistory || []}
-              isNavHistoryLoading={isNavHistoryLoading}
+              chart={chart || ""}
             />
           }
-          fileName="test.pdf"
+          fileName="fund_report.pdf"
         >
           Download PDF Report
         </PDFDownloadLink>
@@ -71,4 +72,4 @@ const PdfCard = () => {
   );
 };
 
-export default PdfCard;
+export default PDFGenButton;

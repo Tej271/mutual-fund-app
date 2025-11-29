@@ -4,7 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { mutualFundAPI } from "@/api/funds";
 import { NAVHistoryChart } from "@/components/NAVHistoryChart";
 import { useNAVHistory } from "@/state/queries/funds";
-import PdfCard from "@/components/PDFCard";
+import PDFGenButton from "@/components/PDFGenButton";
+import { useState } from "react";
 
 function MutualFundPage() {
   const { mutualFundName } = useParams<{ mutualFundName: string }>();
@@ -13,9 +14,9 @@ function MutualFundPage() {
     queryFn: () => mutualFundAPI.getFundDetails(mutualFundName || ""),
     enabled: !!mutualFundName,
   });
+  const [chart, setChart] = useState<string | null>(null);
 
   const { data: navHistory, isLoading: isNavHistoryLoading } = useNAVHistory(mutualFundName);
-
 
   if (error) {
     return <div>Error loading fund details</div>;
@@ -30,8 +31,12 @@ function MutualFundPage() {
         isLoading={isLoading}
       />
 
-      <NAVHistoryChart data={navHistory || []} isLoading={isNavHistoryLoading} />
-      <PdfCard />
+      <NAVHistoryChart
+        data={navHistory || []}
+        isLoading={isNavHistoryLoading}
+        setChart={setChart}
+      />
+      <PDFGenButton chart={chart} />
     </div>
   );
 }
