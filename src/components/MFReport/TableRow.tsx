@@ -1,8 +1,4 @@
-// Source - https://stackoverflow.com/a
-// Posted by Yash, modified by community. See post 'Timeline' for change history
-// Retrieved 2025-11-28, License - CC BY-SA 4.0
-
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
